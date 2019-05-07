@@ -90,7 +90,7 @@ evaluate(GaussianNB, X,y)
 -------------------------------------------------------------------
 '''
 iris = datasets.load_iris()
-X = iris.data  # we only take the first two features.
+X = iris.data
 y = (np.array(iris.target) ==0).astype(int)
 
 print("\n\nIRIS\nModel: Naive\n-----------------------")
