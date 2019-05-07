@@ -3,13 +3,16 @@ from sklearn.naive_bayes import GaussianNB
 import matplotlib.pyplot as plt
 from time import time
 from NaiveModel import Naive
+from sklearn import datasets
 
+''' Shuffles feature matrix and labels in case they are ordered '''
 def shuffle(x,y):
     z = list(zip(x,y))
     np.random.shuffle(z)
     x,y = zip(*z)
     return np.array(x),np.array(y)
 
+''' Splits feature matrix and labels into training and testing data '''
 def split(x,y,split_percentage):
     split_idx = int(len(y)*split_percentage)
     z = list(zip(x,y))
@@ -19,28 +22,7 @@ def split(x,y,split_percentage):
     x2,y2 = zip(*z2)
     return np.array(x1),np.array(y1),np.array(x2),np.array(y2)
 
-
-
-
-'''
-Use the x_value of all training points to generate p(y|x)
-'''
-def p_y_given_x(x,y,bins,show_hist = False):
-    positive_idxs = np.where(y==1)[0]
-    negative_idxs = np.where(y==0)[0]
-    x_p = x[positive_idxs]
-    x_n = x[negative_idxs]
-    h_p, b_p = np.histogram(x_p,bins,range=(x.min(),x.max()))
-    h_p = h_p/x_p.shape[0]
-    h_n, b_n = np.histogram(x_n,bins,range=(x.min(),x.max()))
-    h_n = h_n/x_n.shape[0]
-    h = h_p + h_n
-    p_y = np.divide(h_p,h)
-    if show_hist:
-        plt.plot(b_n[1:],p_y)
-    return p_y,b_n[1:]
-
-
+''' Generates 2 normally distributed clusters to be used as positive and negative examples '''
 def gen_random(p_size, n_size, dims):
     p_mean = np.random.randint(50, size = dims)
     n_mean = np.random.randint(50, size = dims)
@@ -55,6 +37,11 @@ def gen_random(p_size, n_size, dims):
     data,labels = shuffle(data,labels)
     return data,labels
 
+
+''' 
+performs binary classification over X with the provided model 
+    and prints out some useful info
+'''
 def evaluate(model, X, y):
     X,y = shuffle(X,y)
     x_train, y_train, x_test, y_actual = split(X,y,.70)
@@ -62,11 +49,10 @@ def evaluate(model, X, y):
     t0 = time()
     model.fit(x_train,y_train)
     t1 = time()
+    
+    # Shows the decision boundary for each dimension
+    #model.plotActivations()
 
-    try:
-        model.plotActivations()
-    except:
-        pass
     y_predict = model.predict(x_test)
     t2 = time()
     correct = y_predict == y_actual
@@ -96,10 +82,6 @@ evaluate(GaussianNB, X,y)
 ----------Test on IRIS Dataset-------------------------------------
 -------------------------------------------------------------------
 '''
-
-
-# import some data to play with
-from sklearn import datasets
 iris = datasets.load_iris()
 X = iris.data  # we only take the first two features.
 y = (np.array(iris.target) ==0).astype(int)
@@ -117,10 +99,6 @@ evaluate(GaussianNB, X,y)
 ----------Test on DIGITS Dataset-------------------------------------
 -------------------------------------------------------------------
 '''
-
-
-# import some data to play with
-from sklearn import datasets
 digits = datasets.load_digits()
 X = digits.data  # we only take the first two features.
 y = (np.array(digits.target) ==0).astype(int)
