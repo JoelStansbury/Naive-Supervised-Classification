@@ -107,7 +107,7 @@ evaluate(GaussianNB, X,y)
 -------------------------------------------------------------------
 '''
 digits = datasets.load_digits()
-X = digits.data  # we only take the first two features.
+X = digits.data
 y = (np.array(digits.target) ==0).astype(int)
 
 
