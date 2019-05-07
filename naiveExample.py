@@ -64,14 +64,21 @@ def evaluate(model, X, y):
     plt.show()
     
 
+'''
+-------------------------------------------------------------------
+----------Test on Artificial Dataset-------------------------------------
+-------------------------------------------------------------------
+'''
 X,y = gen_random(10000, 10000, 2)
 #plt.scatter(data[:,0],data[:,1],cmap = 'cividis', c = labels, marker = '.')
 #plt.show()
 
-print("\n\nModel: Naive\n-----------------------")
+print("\n\nArtificial")
+print("Model: Naive\n-----------------------")
 evaluate(Naive, X,y)
 
-print("\n\nModel: GaussianNB\n-----------------------")
+print("\n\nArtificial")
+print("Model: GaussianNB\n-----------------------")
 evaluate(GaussianNB, X,y)
 
 
@@ -89,7 +96,7 @@ y = (np.array(iris.target) ==0).astype(int)
 print("\n\nIRIS\nModel: Naive\n-----------------------")
 evaluate(Naive, X,y)
 
-print("\n\nModel: GaussianNB\n-----------------------")
+print("\n\nIRIS\nModel: GaussianNB\n-----------------------")
 evaluate(GaussianNB, X,y)
 
 
@@ -107,7 +114,7 @@ y = (np.array(digits.target) ==0).astype(int)
 print("\n\nDIGITS\nModel: Naive\n-----------------------")
 evaluate(Naive, X,y)
 
-print("\n\nModel: GaussianNB\n-----------------------")
+print("\n\nDIGITS\nModel: GaussianNB\n-----------------------")
 evaluate(GaussianNB, X,y)
 
 
