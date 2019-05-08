@@ -13,13 +13,13 @@ def p_y_given_x(x,y,bins,show_hist = False):
     h_n, b_n = np.histogram(x_n,bins,range=(x.min(),x.max()))
     
     ''' Computationally expensive '''
-    #h = h_p + h_n + 1
-    #p_y = np.divide(h_p,h)
+    h = h_p + h_n + 1
+    p_y = np.divide(h_p,h)
     
     ''' Faster, but behaves poorly sometimes '''
-    h_p = h_p/x_p.shape[0]
-    h_n = h_n/x_n.shape[0]
-    p_y = h_p - h_n + 0.5
+    #h_p = h_p/x_p.shape[0]
+    #h_n = h_n/x_n.shape[0]
+    #p_y = h_p - h_n + 0.5
 
 
     if show_hist:
